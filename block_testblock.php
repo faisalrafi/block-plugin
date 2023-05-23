@@ -28,14 +28,37 @@ class block_testblock extends block_base {
         $this->title = get_string('pluginname', 'block_testblock');
     }
 
+    function has_config(){
+        return true;
+    }
+
     function get_content() {
+        global $DB;
 
         if ($this->content !== NULL) {
             return $this->content;
         }
+        $content = '';
 
+        $showcourses = get_config('block_testblock', 'showcourses');
+
+        if($showcourses){
+            $content .= '<b> Recent Courses: </b><br>';
+            $courses = $DB->get_records('course');
+            foreach($courses as $course){
+                $content .= $course->fullname . '<br>';
+            }
+        }
+        else{
+            $content .= '<b> Recent Users: </b><br>';
+            $users = $DB->get_records('user');
+            foreach($users as $user){
+                $content .= $user->firstname . ' ' . $user->lastname . '<br>';
+            }
+        }
+        
         $this->content = new stdClass;
-        $this->content->text = 'This is new text';
+        $this->content->text = $content;
         $this->content->footer = 'This is new footer';
         
         return $this->content;

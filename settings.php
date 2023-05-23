@@ -13,18 +13,19 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * Strings for component 'block_testblock', language 'en', branch 'MOODLE_20_STABLE'
+ * Form for editing TEST block instances.
  *
  * @package   block_testblock
  * @copyright 2023 Md. Faisal Abid
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['testblock:addinstance'] = 'Add a new test block';
-$string['testblock:myaddinstance'] = 'Add a new test block to Dashboard';
-$string['testblock'] = 'test block';
-$string['pluginname'] = 'Test Block';
-$string['showcourses'] = 'Show courses';
-$string['description'] = 'Show courses instead of users';
+ defined('MOODLE_INTERNAL') || die;
+
+ if($ADMIN->fulltree){
+    $settings->add(new admin_setting_configcheckbox('block_testblock/showcourses',
+            get_string('showcourses','block_testblock'),
+            get_string('description','block_testblock'),
+            0));
+ }
